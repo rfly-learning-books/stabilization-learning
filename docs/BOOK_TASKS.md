@@ -71,6 +71,7 @@ D_\theta(s,a)=V_\theta(s')-V_\theta(s),
 | 第 2—6 章 | 状态镇定、跟踪、稳定性与内模数值例 | [统一 v4](../scripts/run_unified_training_v4.py)、[基础数值例](../scripts/run_book_foundations_overnight_v1.py) | 基础环境训练与数值复算；不同输入和状态定义逐任务对齐 |
 | 第 7、15 章 | 已知目标几何的位姿观测，以及电机、车摆观测 | [观测 v5](../scripts/run_observer_training_v5.py) | `cooperative_pose` 使用合成投影关键点；未知场景自身运动与完整估计控制耦合尚待实现 |
 | 第 8 章 | 圆盘的已知模型、直接 D 学习、模型辨识和 GMM 对照 | [圆盘实验](../scripts/run_book_disk_overnight_v1.py) | 数值圆盘、固定 V 的下降量与控制学习 |
+| 第 8 章 | 拉格朗日 L 学习与 GMM-D 扩展 | [协作接口与任务](GMM_L_LEARNING_INTERFACES.md) | 已有一维圆盘 GMM；L 学习和通用 v4 后端待实现；文献结果与项目实验分列 |
 | 第 9 章 | 随机镇定与目标／陷阱统计 | [95 状态网格](../scripts/run_book_grid_overnight_v1.py) | 有限 MDP 的策略与概率复算；与神经 M 训练分别统计 |
 | 第 10 章 | 表示、动作信息与可学习度量 | RGB 表示／M 训练和轻量视觉环境 | 完整视觉接触圆盘及时序消融尚待补齐 |
 | 第 11 章 | RL、下降软惩罚与约束过滤 | [RL 对照](../scripts/run_book_rl_overnight_v1.py) | 二维积分器上的等采样预算 SAC 比较，使用固定证书 |

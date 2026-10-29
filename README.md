@@ -84,6 +84,8 @@ python scripts/run_observer_training_v5.py train --config configs/public/observe
 
 RGB 新模板支持检查点无损去重与有界回放，配置和空间测算见 [runs 存储说明](docs/RUN_STORAGE.md)。
 
+GMM-D 与拉格朗日 L 学习的模型、控制器及 Runner 协作接口见 [GMM 与 L 学习接口](docs/GMM_L_LEARNING_INTERFACES.md)。一维圆盘 GMM 已有专用实现；L 学习与统一 v4 后端仍待实现。
+
 ## 库与职责
 
 | 层 | 代码 | 职责 |

@@ -19,3 +19,7 @@
 ## 固定翼教学参考
 
 `migration/fixed_wing_preparation/20261023_v2/sources/mavsim_python__models__mav_dynamics_control.py.txt` 是上游未填写的教学模板，含空赋值题目，保留为文本参考，不属于可执行环境。其 GPL 许可随目录保留。
+
+## GMM-D 与 L 学习协作接口
+
+现有一维圆盘 GMM 可通过模型契约预测完整后继并计算 D；一般 GMR、L 学习动力学与控制器、统一 v4 后端均待实现。接口和建议分工见 [GMM 与 L 学习接口](GMM_L_LEARNING_INTERFACES.md)。
