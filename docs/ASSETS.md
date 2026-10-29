@@ -13,6 +13,24 @@
 
 未指定配置时，通用环境使用 `STABILIZATION_ASSET_ROOT`，默认位于用户目录 `.stabilization/assets`。只在实际调用相关任务时加载资产。
 
+上述资产配置用于支持该解析接口的通用环境。版本化研究入口还会读取自身配置及固定的仓库相对路径；`assets.json` 不统一覆盖所有历史后端。
+
 版本化书稿入口还会核对源码、清单及初始化数据哈希。资源必须来自同一协议，不能用任意同名文件替代。其配置中的历史路径应在新的本地配置中替换；原机器硬件锁没有发布。
+
+## 从头应用套件资源
+
+`run_scratch_applications_v1.py prepare` 会核对以下内容，须在准备套件前就位：
+
+| 仓库相对位置 | 内容及用途 |
+|---|---|
+| `assets/push_geometric32/` | 32 形状几何与标定能力库；提供环境响应 |
+| `migration/visual_scene_reconstruction/scenes.json` | 室内场景划分与来源清单 |
+| `third_party/so101_timeaware_v1/MIGRATION.json` | SO101 资源来源清单 |
+| `third_party/visual_original/runtime/dependencies/fastdepth_mobilenet_l1/extracted_state_dict.pt` | 固定 FastDepth 权重 |
+| 同目录 `models.py`、SO101 目录中的 PNG 纹理 | 已保留的模型源码及静态渲染资源 |
+
+前四项中的实验数据、权重及原运行资源清单没有随源码发布，需按选定协议另备。套件随机初始化 AE、M 和 Critic；固定几何、响应库与 FastDepth 属于保留先验。
+
+联合成本 v2 的 `push-prepare` 可从 MuJoCo 接触试验新建八形状响应／时间库，再将生成的 `time_bank.json` 传入 `push-train`；也支持显式提供已有匹配库。命令见 [训练指南](TRAINING.md#从头联合成本-push-与-so101)。
 
 `assets/recovered_visual_legacy/src` 中的 Python 文件是运行源码。Poly Haven 网格与纹理为带 CC0 来源说明的静态渲染资源，不是采样数据。

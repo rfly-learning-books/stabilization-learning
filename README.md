@@ -15,7 +15,7 @@ V_\theta(e)=e^\top M_\theta(e,c)e,\qquad M_\theta\succ0,
 要求 Python 3.10 或更新版本。先克隆仓库并进入根目录：
 
 ```bash
-git clone git@github.com:Jings408/stabilization-learning.git
+git clone git@github.com:rfly-learning-books/stabilization-learning.git
 cd stabilization-learning
 python -m venv .venv
 ```
@@ -80,7 +80,7 @@ python scripts/run_unified_training_v4.py train --config configs/public/unified_
 python scripts/run_observer_training_v5.py train --config configs/public/observer_cpu_smoke.json --output runs/observer_cpu_smoke
 ```
 
-详细参数、运行时锁、GPU 配置及输出协议见 [训练指南](docs/TRAINING.md)。
+详细参数、运行时锁、GPU 配置及输出协议见 [训练指南](docs/TRAINING.md)。按书稿章节选择环境、查找从头训练入口及已有实验结果，见 [训练任务与书稿对应关系](docs/BOOK_TASKS.md)。
 
 ## 库与职责
 
@@ -104,9 +104,13 @@ python scripts/run_observer_training_v5.py train --config configs/public/observe
 | 观测器 | v5 / `observer_model_gradient` | 三个内置任务无需训练资产 |
 | 轻量视觉伺服 | 通用 CLI 的 `visual_servo` | 自生成纹理与 DCT 特征 |
 | 书稿室内 RGB | `run_rgb_book_reproduction_v1.py` | AE 初始化、深度模型、bootstrap、参考缓存及来源清单 |
-| Push 离散 SAC / SO101 | v4 / 专用推动后端 | 校准响应与时间库；MuJoCo |
+| Push 离散 SAC | v4 / `push_discrete_sac` | 校准响应与时间库 |
+| 从头联合成本 Push / SO101 | `run_joint_certificate_v2.py` / Full-M PPO | 校准响应与时间库；MuJoCo |
+| 从头 Push、SO101 课程与 RGB | `run_scratch_applications_v1.py` | 几何能力库、场景清单、FastDepth；MuJoCo |
 
 轻量 `visual_servo` 与书稿室内 RGB 是不同任务。书稿分支保留训练程序，但其外部训练数据与预训练模型不在本仓库。资源目录和配置方式见 [外部资源](docs/ASSETS.md)。
+
+已有实验中，随机 Full-M 的 Push 三种子训练将留出形状成功数由各 97/128 提高至各 123/128；从首次更新加入时间、误差、切换和输入成本的 seed81，在 SO101 仿真保持 32/32 成功，平均耗时降低 13.04%，误差积分增加 7.81%。RGB 的收益来自专用室内渲染环境，须按对应初始化和评价协议复现。实验范围、对照定义与结果来源列于 [书稿任务说明](docs/BOOK_TASKS.md)。
 
 ## 开发与验证
 
