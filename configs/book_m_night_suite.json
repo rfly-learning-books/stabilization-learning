@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "name": "book_m_learning_night_v1",
+  "depends_on": "runs/visual_reconstructed_seed41_20261023_v1/INDEPENDENT_FINAL_AUDIT.json",
+  "preparation_audit": "runs/book_suite_preparation_20261023_v1/PREPARATION_AUDIT.json",
+  "seeds": [41, 42, 43],
+  "training": {
+    "episodes": 1200,
+    "batch_episodes": 24,
+    "epochs": 4,
+    "learning_rate": 0.0002,
+    "value_learning_rate": 0.001,
+    "std": 0.15,
+    "clip": 0.2,
+    "target_kl": 0.03,
+    "certificate_weight": 0.1,
+    "decay": 0.05,
+    "validation_seeds": [10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016]
+  },
+  "test_seed_start": 20001,
+  "test_seed_count": 96,
+  "test_initial_scale_factors": [1.0, 1.5, 2.0],
+  "tasks": [
+    {"id": "coupled_linear", "env": "coupled_linear", "env_kwargs": {}},
+    {"id": "point_mass", "env": "point_mass", "env_kwargs": {}},
+    {"id": "pendulum_local", "env": "pendulum", "env_kwargs": {}},
+    {"id": "cartpole_local", "env": "cartpole", "env_kwargs": {}},
+    {"id": "two_link_arm", "env": "two_link_arm", "env_kwargs": {}},
+    {"id": "unicycle_tracking", "env": "unicycle_tracking", "env_kwargs": {}},
+    {"id": "multirotor_hover", "env": "multirotor_tracking", "env_kwargs": {"trajectory": "hover"}},
+    {"id": "multirotor_circle", "env": "multirotor_tracking", "env_kwargs": {"trajectory": "circle"}}
+  ],
+  "scope": "Seven existing physical environment classes, eight task settings, same episode-held Cholesky-M PPO and full-horizon task adapter. No optical flow. State tasks use physical errors; this is not a reproduction of every cited controller in the book.",
+  "selection": "Validation objective only, including the identity initialization. Test never selects model or hyperparameters.",
+  "acceptance": "Interface/gradient/physical-step/resume integrity is separate from empirical stabilization, task performance, and generalization; report failures and best=initial honestly.",
+  "safety": {"minimum_free_gib": 50, "maximum_run_gib": 35, "maximum_gpu_fraction": 0.65}
+}

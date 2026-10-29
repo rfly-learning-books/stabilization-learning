@@ -1,0 +1,78 @@
+{
+  "schema": "unified_training_v1",
+  "maximum_minutes": 30,
+  "minimum_free_gib": 20,
+  "description": "Fresh RGB AE/Critic/M; progress-prioritized metric proposals with control trust checks, boundary replay and separately logged validation acceptance. Target P0/P1 >=38/48. No historical model/replay initialization.",
+  "jobs": [
+    {
+      "id": "rgb_stable_m_engineering",
+      "backend": "rgb_legacy",
+      "config": {
+        "seed": 41,
+        "device": "cuda:0",
+        "batch_size": 2,
+        "parallel_envs": 2,
+        "initial_collection_steps": 4,
+        "collection_steps": 8,
+        "boundary_steps": 4,
+        "post_success_steps": 50,
+        "maximum_episodes_per_room": 128,
+        "replay_capacity": 30000,
+        "regular_collection_quotas": [
+          {
+            "classroom_train_00": 8,
+            "classroom_train_01": 8
+          },
+          {
+            "classroom_train_00": 8,
+            "classroom_train_01": 8
+          }
+        ],
+        "case_manifest": "D:\\stabilization-learning\\configs\\rgb_stable_m_v1\\engineering_cases.json",
+        "validation_cases": 2,
+        "test_cases": 2,
+        "evaluation_steps": 12,
+        "evaluation_batch": 2,
+        "evaluation_plants": [
+          "P0",
+          "P1"
+        ],
+        "probe_batch_size": 4,
+        "retention_diagnostic": false,
+        "retention_variants": [
+          "selected",
+          "identity"
+        ],
+        "target_successes": 38,
+        "stability": {
+          "encoder_lr": 1E-05,
+          "critic_lr": 0.0001,
+          "metric_lr": 0.0001,
+          "critic_encoder_gradient_cap": 0.5,
+          "aux_gradient_cap": 0.2,
+          "progress_fraction": 0.04,
+          "interior_rho": 0.5,
+          "action_trust_mean": 0.01,
+          "action_trust_max": 0.05,
+          "guard_batch": 2
+        },
+        "engineering": true,
+        "train_scene_count": 2
+      },
+      "schedule": {
+        "warmup_representation": 8,
+        "pretrain_evaluator": 4,
+        "epochs": 2,
+        "representation_updates": 2,
+        "evaluator_updates": 2,
+        "certificate_updates": 4
+      },
+      "test_variants": [
+        "selected",
+        "identity",
+        "initial",
+        "shadow"
+      ]
+    }
+  ]
+}

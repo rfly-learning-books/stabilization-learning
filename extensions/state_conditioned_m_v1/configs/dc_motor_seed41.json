@@ -1,0 +1,17 @@
+{
+  "schema": "state_conditioned_dc_motor_seed41_v1",
+  "task": "dc_motor_state_dependent_m",
+  "train_seed": 41,
+  "updates": 300,
+  "batch_states": 32,
+  "learning_rate": 0.0003,
+  "decay": 0.05,
+  "descent_weight": 1.0,
+  "validation_seeds": [10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016],
+  "test_seed_start": 20001,
+  "test_seed_count": 32,
+  "alpha": 0.05,
+  "clf_points": 21,
+  "formal_training_requires_no_other_writer": true,
+  "scope": "bounded one-seed engineering-to-pilot; not a stability theorem"
+}

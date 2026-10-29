@@ -1,0 +1,21 @@
+{
+  "task": "push_any_shape",
+  "protocol": "original_full_m_geometric32",
+  "seed": 1,
+  "device": "cuda",
+  "torch_version": "2.5.1+cu124",
+  "preflight_audit": "runs/original_push_parity_20261022_v2/AUDIT.json",
+  "updates": 1000,
+  "eval_every": 10,
+  "initialization": "original_initial_checkpoint_update_0",
+  "minimum_free_gib": 50,
+  "maximum_run_gib": 35,
+  "gpu_memory_fraction": 0.65,
+  "max_seconds": 7200,
+  "test_seeds": [2026102200, 2026102201, 2026102202, 2026102203, 2026102204, 2026102205, 2026102206, 2026102207, 2026102208, 2026102209],
+  "test_scope": "31 trained/calibrated shapes times 10 new fixed initial states; the original pinned T regression is reported separately; not unseen shapes",
+  "test_exclude_repeated_T_regression": true,
+  "test_does_not_select_model": true,
+  "historical_reference": "full_m_geometric_20260913",
+  "experiment_kind": "same-initialization original-protocol retraining in migrated project"
+}

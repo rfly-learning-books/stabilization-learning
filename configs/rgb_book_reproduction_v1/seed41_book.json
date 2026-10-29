@@ -1,0 +1,125 @@
+{
+  "schema": "unified_training_v1",
+  "maximum_minutes": 360,
+  "minimum_free_gib": 20,
+  "book_protocol": {
+    "mode": "formal",
+    "validation_every": 2,
+    "diagnostic_initial": true,
+    "diagnostic_ready": true,
+    "select_initial": false,
+    "select_ready": false
+  },
+  "source_files": [
+    "D:/stabilization-learning/scripts/launch_rgb_book_reproduction_v1.ps1",
+    "D:/stabilization-learning/extensions/reproducible_training_v4/deterministic_rgb.py",
+    "D:/stabilization-learning/scripts/audit_rgb_book_numerics_v1.py"
+  ],
+  "comparative_sources": {
+    "book": "D:/stabilization-learning/runs/visual_reconstructed_seed41_20261023_v1/complete.json",
+    "book_audit": "D:/stabilization-learning/runs/visual_reconstructed_seed41_20261023_v1/INDEPENDENT_FINAL_AUDIT.json"
+  },
+  "jobs": [
+    {
+      "id": "rgb_book_seed41",
+      "backend": "rgb_legacy",
+      "test_variants": [
+        "selected",
+        "identity",
+        "shadow",
+        "initial_identity"
+      ],
+      "schedule": {
+        "warmup_representation": 1000,
+        "pretrain_evaluator": 1000,
+        "epochs": 24,
+        "representation_updates": 300,
+        "evaluator_updates": 0,
+        "certificate_updates": 200
+      },
+      "config": {
+        "seed": 41,
+        "device": "cuda:0",
+        "cpu_threads": 2,
+        "epochs": 24,
+        "batch_size": 4,
+        "collection_steps": 120,
+        "trajectories_per_scene": 2,
+        "bootstrap_transitions": 2822,
+        "train_scene_count": 24,
+        "replay_capacity": 20000,
+        "replay_cached_episodes": 16,
+        "probe_batch_size": 4,
+        "minimum_free_gib": 20,
+        "validation_plants": [
+          "P0"
+        ],
+        "validation_steps": 300,
+        "validation_cases": 48,
+        "bootstrap_root": "D:/stabilization-learning/assets/reconstructed_visual_bootstrap_20261023_v1",
+        "book_cases": "D:/stabilization-learning/assets/reconstructed_visual_bootstrap_20261023_v1/evaluation_starts.json",
+        "initial_checkpoint": "D:/stabilization-learning/assets/original_visual_initialization/initial.pt",
+        "generalization_suites": [
+          {
+            "name": "book_full_val",
+            "cases": "val",
+            "variants": [
+              "selected",
+              "identity",
+              "shadow",
+              "initial_identity"
+            ],
+            "plants": [
+              "P0"
+            ],
+            "steps": 300
+          },
+          {
+            "name": "book_test",
+            "cases": "test",
+            "variants": [
+              "selected",
+              "identity",
+              "shadow",
+              "initial_identity"
+            ],
+            "plants": [
+              "P0",
+              "P1"
+            ],
+            "steps": 300
+          },
+          {
+            "name": "depth_0_5",
+            "cases": "test",
+            "case_limit": 72,
+            "variants": [
+              "selected",
+              "identity"
+            ],
+            "plants": [
+              "P0"
+            ],
+            "steps": 300,
+            "depth_scale": 0.5
+          },
+          {
+            "name": "depth_2",
+            "cases": "test",
+            "case_limit": 72,
+            "variants": [
+              "selected",
+              "identity"
+            ],
+            "plants": [
+              "P0"
+            ],
+            "steps": 300,
+            "depth_scale": 2
+          }
+        ]
+      }
+    }
+  ],
+  "absolute_deadline_unix": 1793235600
+}

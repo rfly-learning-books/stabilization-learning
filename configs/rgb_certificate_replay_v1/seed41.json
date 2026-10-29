@@ -1,0 +1,23 @@
+{
+  "seed": 41,
+  "evaluation_seed": 2026102841,
+  "device": "cuda:0",
+  "maximum_minutes": 180,
+  "minimum_free_gib": 8,
+  "parallel_envs": 16,
+  "replay_capacity": 100000,
+  "reach_steps": 200,
+  "post_success_steps": 50,
+  "representation_batch": 128,
+  "batch_size": 512,
+  "warmup_updates": 1500,
+  "response_pretrain": 1500,
+  "critic_pretrain": 1000,
+  "epochs": 12,
+  "response_updates_per_room": 32,
+  "q_updates_per_room": 32,
+  "m_updates_per_room": 16,
+  "val_cases": 48,
+  "test_cases": 72,
+  "evaluation_plants": ["P0", "P1"]
+}

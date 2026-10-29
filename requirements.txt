@@ -1,0 +1,3 @@
+# Run from the cloned repository root.
+-e ./stabilization-gym
+-e ./stabilization-learning-control

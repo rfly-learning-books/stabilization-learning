@@ -1,0 +1,5 @@
+{
+  "env": "point_mass",
+  "env_kwargs": {"max_steps": 250},
+  "training": {"episodes": 96, "batch_episodes": 12, "certificate_weight": 0.1, "seed": 41}
+}

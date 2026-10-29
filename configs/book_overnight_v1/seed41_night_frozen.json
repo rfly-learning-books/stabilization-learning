@@ -1,0 +1,475 @@
+{
+  "schema": "book_overnight_queue_v1",
+  "deadline_iso": "2026-10-29T09:00:00+08:00",
+  "minimum_free_gib": 20,
+  "checklist": "E:/rfly-books/output/reports/全书实验验证任务清单_20261028/实验任务清单.json",
+  "after_rgb": {
+    "run": "D:\\stabilization-learning\\runs\\rgb_book_seed41_20261029_0036",
+    "report": "D:\\stabilization-learning\\artifacts\\rgb_book_seed41_20261029_0036_report",
+    "curves_marker": "D:\\stabilization-learning\\artifacts\\rgb_book_seed41_20261029_0036_report\\academic_figures\\CURVES_COMPLETE.json"
+  },
+  "source_files": [
+    "D:\\stabilization-learning\\scripts\\prepare_book_overnight_plan_v1.py",
+    "D:\\stabilization-learning\\scripts\\launch_book_after_rgb_v1.ps1",
+    "D:\\stabilization-learning\\scripts\\analysis\\plot_rgb_book_v1.py",
+    "D:\\stabilization-learning\\artifacts\\book_overnight_asset_mapping_20261029_v1\\ASSET_MAPPING.json",
+    "D:\\stabilization-learning\\artifacts\\book_generation_engineering_20261029_0116\\FINAL_STATE.json",
+    "D:\\stabilization-learning\\artifacts\\book_generation_ddim_audit_20261029\\AUDIT.json",
+    "D:\\stabilization-learning\\scripts\\report_book_overnight_v1.py"
+  ],
+  "steps": [
+    {
+      "id": "foundations",
+      "task_ids": [
+        "E01",
+        "E02",
+        "E08"
+      ],
+      "scope": "Source-linked sampled, PI, virtual-output, output-history and physical resonance subexperiments; original full task acceptance remains separate.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_foundations_overnight_v1.py",
+            "--max-minutes",
+            "10",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_foundations_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 600,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "-1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_foundations_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_foundations_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_foundations_seed41_20261029\\REPORT.md"
+          ]
+        }
+      ],
+      "maximum_seconds": 630,
+      "minimum_start_seconds": 60,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_foundations_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_foundations_overnight_v1\\algo.py",
+        "D:\\stabilization-learning\\extensions\\book_foundations_overnight_v1\\env.py",
+        "D:\\stabilization-learning\\extensions\\book_foundations_overnight_v1\\runner.py",
+        "D:\\stabilization-learning\\extensions\\book_foundations_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_foundations_overnight_v1.py"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "disk",
+      "task_ids": [
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "scope": "One-sided quasi-static disk: known dynamics, direct D, identified dynamics and GMM; matched data budgets and independent residual calibration; E05 only disk excitation diagnostics.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_disk_overnight_v1.py",
+            "--seed",
+            "41",
+            "--max-minutes",
+            "30",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_disk_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 1800,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "-1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_disk_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_disk_seed41_20261029\\REPORT.md",
+            "D:\\stabilization-learning\\runs\\book_disk_seed41_20261029\\test_scores.csv",
+            "D:\\stabilization-learning\\runs\\book_disk_seed41_20261029\\paired_comparisons.csv"
+          ]
+        }
+      ],
+      "maximum_seconds": 1830,
+      "minimum_start_seconds": 60,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_disk_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_disk_overnight_v1\\algo.py",
+        "D:\\stabilization-learning\\extensions\\book_disk_overnight_v1\\env.py",
+        "D:\\stabilization-learning\\extensions\\book_disk_overnight_v1\\runner.py",
+        "D:\\stabilization-learning\\extensions\\book_disk_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_disk_overnight_v1.py"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "e09",
+      "task_ids": [
+        "E09"
+      ],
+      "scope": "24576 scalar stochastic disk-error trajectories with multiplicative and persistent additive noise; physical one-sided-domain exits recorded separately.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_overnight_v1.py",
+            "e09",
+            "--seed",
+            "41",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_e09_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 600,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "-1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_e09_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_e09_seed41_20261029\\FIGURES_COMPLETE.json",
+            "D:\\stabilization-learning\\runs\\book_e09_seed41_20261029\\REPORT.md"
+          ]
+        }
+      ],
+      "maximum_seconds": 630,
+      "minimum_start_seconds": 60,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_e09_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\applications.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\catalog.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\queue.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\test_queue_contracts.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_overnight_v1.py"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "e10",
+      "task_ids": [
+        "E10"
+      ],
+      "scope": "Reviewed 95-state exact MDP with fixed drift certificate, reward and constrained policy iteration, plus 10000 independent rollouts per policy and parameter scans.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_grid_overnight_v1.py",
+            "--seed",
+            "41",
+            "--episodes",
+            "10000",
+            "--max-minutes",
+            "15",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_e10_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 900,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "-1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_e10_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_e10_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_e10_seed41_20261029\\BOOK_MODEL_COMPARISON.json"
+          ]
+        }
+      ],
+      "maximum_seconds": 930,
+      "minimum_start_seconds": 60,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_e10_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_grid_overnight_v1\\algo.py",
+        "D:\\stabilization-learning\\extensions\\book_grid_overnight_v1\\env.py",
+        "D:\\stabilization-learning\\extensions\\book_grid_overnight_v1\\runner.py",
+        "D:\\stabilization-learning\\extensions\\book_grid_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_grid_overnight_v1.py"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "e13",
+      "task_ids": [
+        "E13"
+      ],
+      "scope": "GPU off-policy SAC on a two-dimensional integrator: reward, soft penalty and exact fixed-certificate action filter; equal transitions and independent nominal/disturbed tests.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_rl_overnight_v1.py",
+            "train",
+            "--config",
+            "D:\\stabilization-learning\\extensions\\book_rl_overnight_v1\\seed41.json",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_e13_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 1800,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "0",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_e13_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_e13_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_e13_seed41_20261029\\FIGURES_COMPLETE.json"
+          ]
+        }
+      ],
+      "maximum_seconds": 1830,
+      "minimum_start_seconds": 60,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_e13_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_rl_overnight_v1\\algo.py",
+        "D:\\stabilization-learning\\extensions\\book_rl_overnight_v1\\env.py",
+        "D:\\stabilization-learning\\extensions\\book_rl_overnight_v1\\runner.py",
+        "D:\\stabilization-learning\\extensions\\book_rl_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_rl_overnight_v1.py",
+        "D:\\stabilization-learning\\extensions\\book_rl_overnight_v1\\seed41.json"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "e25",
+      "task_ids": [
+        "E25"
+      ],
+      "scope": "SD1.5 and 20 DDIM steps: four local x0 correction methods, held-out prompt families, paired noise, independent SigLIP; human blind scores and distribution metrics remain unfinished.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_book_generation_20261029\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_generation_overnight_v1.py",
+            "--config",
+            "D:\\stabilization-learning\\extensions\\book_generation_overnight_v1\\seed41.json",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_e25_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 5400,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "0",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_e25_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_e25_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_e25_seed41_20261029\\FIGURES_COMPLETE.json"
+          ]
+        }
+      ],
+      "maximum_seconds": 5430,
+      "minimum_start_seconds": 1200,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_e25_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_generation_overnight_v1\\algo.py",
+        "D:\\stabilization-learning\\extensions\\book_generation_overnight_v1\\env.py",
+        "D:\\stabilization-learning\\extensions\\book_generation_overnight_v1\\runner.py",
+        "D:\\stabilization-learning\\extensions\\book_generation_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_generation_overnight_v1.py",
+        "D:\\stabilization-learning\\extensions\\book_generation_overnight_v1\\seed41.json"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "e20",
+      "task_ids": [
+        "E20"
+      ],
+      "scope": "Book calibration and original A/B; new seed41 C PPO training, 512 numerical plus 64 MuJoCo paired episodes; continuous physical hold and exact M-dependent successor V audited.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_overnight_v1.py",
+            "e20",
+            "--config",
+            "D:\\stabilization-learning\\extensions\\book_overnight_v1\\e20_seed41.json",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_e20_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 7200,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "-1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_e20_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_e20_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_e20_seed41_20261029\\FIGURES_COMPLETE.json"
+          ]
+        }
+      ],
+      "maximum_seconds": 7230,
+      "minimum_start_seconds": 1800,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_e20_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\applications.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\catalog.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\queue.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\test_queue_contracts.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_overnight_v1.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\e20_seed41.json"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "observers",
+      "task_ids": [
+        "E22"
+      ],
+      "scope": "Corrected v4 full-sequence observer training for motor, cart-pole and known cooperative target pose; separate noise/mismatch/geometry conditions. E23/E24 unknown-scene and coupled-control tasks not implemented.",
+      "commands": [
+        {
+          "argv": [
+            "D:\\stabilization-learning\\.venv_rgb_gpu_20261027\\Scripts\\python.exe",
+            "-X",
+            "utf8",
+            "-u",
+            "D:\\stabilization-learning\\scripts\\run_book_overnight_v1.py",
+            "observers",
+            "--config",
+            "D:\\stabilization-learning\\extensions\\book_overnight_v1\\observers_seed41.json",
+            "--output",
+            "D:\\stabilization-learning\\runs\\book_observers_seed41_20261029"
+          ],
+          "cwd": "D:\\stabilization-learning",
+          "timeout_seconds": 5400,
+          "environment": {
+            "CUDA_VISIBLE_DEVICES": "-1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONUTF8": "1",
+            "PYTHONIOENCODING": "utf-8",
+            "OMP_NUM_THREADS": "1",
+            "MKL_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+            "HF_HOME": "D:\\stabilization-learning\\.cache\\book_generation_hf"
+          },
+          "expected_files": [
+            "D:\\stabilization-learning\\runs\\book_observers_seed41_20261029\\RESULTS.json",
+            "D:\\stabilization-learning\\runs\\book_observers_seed41_20261029\\FINAL_STATE.json",
+            "D:\\stabilization-learning\\runs\\book_observers_seed41_20261029\\FIGURES_COMPLETE.json"
+          ]
+        }
+      ],
+      "maximum_seconds": 5430,
+      "minimum_start_seconds": 1200,
+      "output_dirs": [
+        "D:\\stabilization-learning\\runs\\book_observers_seed41_20261029"
+      ],
+      "source_files": [
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\applications.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\catalog.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\queue.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\test_queue_contracts.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\__init__.py",
+        "D:\\stabilization-learning\\scripts\\run_book_overnight_v1.py",
+        "D:\\stabilization-learning\\extensions\\book_overnight_v1\\observers_seed41.json"
+      ],
+      "depends_on": []
+    }
+  ],
+  "task_notes": {
+    "E00": "Queue protocol, provenance and 32-task evidence matrix are shared deliverables; full-book acceptance remains per original checklist.",
+    "E14": "Env/algo/Runner interfaces exercised by the completed runs; a fresh installation on a different machine is not claimed.",
+    "E16": "RGB book AE+M reproduction is a separate evidence package. The chapter 13 B/J/P/G four-channel ablation is not equivalent.",
+    "E25": "Engineering gate contributes no performance evidence. Human blind evaluation is prepared but not performed.",
+    "E31": "Finite MDP comparisons do not supply an adversarial game experiment."
+  }
+}

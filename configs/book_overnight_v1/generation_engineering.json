@@ -1,0 +1,52 @@
+{
+  "schema": "book_e25_generation_v1",
+  "seed": 41,
+  "device": "cuda:0",
+  "assets": "D:/stabilization-learning/assets/book_generation_20261029",
+  "deadline_iso": "2026-10-29T09:00:00+08:00",
+  "maximum_minutes": 15,
+  "minimum_free_gib": 20,
+  "image_size": 256,
+  "steps": 4,
+  "cfg": 7.5,
+  "strengths": [
+    0.0,
+    0.01,
+    0.03,
+    0.06
+  ],
+  "updates": 20,
+  "methods": [
+    "original",
+    "fixed",
+    "backtracking",
+    "learned"
+  ],
+  "train_prompts": [
+    {
+      "id": "engtr01",
+      "text": "A blue bowl on a gray table."
+    },
+    {
+      "id": "engtr02",
+      "text": "A pencil on plain white paper."
+    }
+  ],
+  "validation_prompts": [
+    {
+      "id": "engval01",
+      "text": "A stone on green moss."
+    }
+  ],
+  "test_seeds": [
+    60113
+  ],
+  "test_prompts": [
+    {
+      "id": "engtest01",
+      "family": "engineering_only",
+      "text": "A photograph of a plain wooden chair."
+    }
+  ],
+  "mode": "engineering"
+}

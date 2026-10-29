@@ -1,0 +1,423 @@
+{
+  "schema": "unified_training_v1",
+  "maximum_minutes": 437.0,
+  "minimum_free_gib": 30,
+  "description": "Frozen single seed81 suite: two RGB arms, historical trained and same-feature identity references, no test-driven arm selection; no automatic resume.",
+  "jobs": [
+    {
+      "id": "rgb_batch4_reference",
+      "backend": "rgb_legacy",
+      "config": {
+        "seed": 81,
+        "device": "cuda:0",
+        "batch_size": 4,
+        "parallel_envs": 16,
+        "train_scene_count": 24,
+        "initial_collection_steps": 24,
+        "collection_steps": 24,
+        "validation_cases": 48,
+        "test_cases": 72,
+        "evaluation_steps": 200,
+        "evaluation_batch": 4,
+        "cpu_threads": 2,
+        "replay_capacity": 50000,
+        "replay_cached_episodes": 96,
+        "include_historical_reference": true
+      },
+      "schedule": {
+        "warmup_representation": 1000,
+        "pretrain_evaluator": 1000,
+        "epochs": 24,
+        "representation_updates": 300,
+        "evaluator_updates": 0,
+        "certificate_updates": 200
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "shadow",
+        "historical_trained_reference",
+        "historical_trained_identity"
+      ]
+    },
+    {
+      "id": "rgb_batch16_throughput",
+      "backend": "rgb_legacy",
+      "config": {
+        "seed": 81,
+        "device": "cuda:0",
+        "batch_size": 16,
+        "parallel_envs": 16,
+        "train_scene_count": 24,
+        "initial_collection_steps": 24,
+        "collection_steps": 24,
+        "validation_cases": 48,
+        "test_cases": 72,
+        "evaluation_steps": 200,
+        "evaluation_batch": 4,
+        "cpu_threads": 2,
+        "replay_capacity": 50000,
+        "replay_cached_episodes": 96,
+        "include_historical_reference": true
+      },
+      "schedule": {
+        "warmup_representation": 1000,
+        "pretrain_evaluator": 1000,
+        "epochs": 24,
+        "representation_updates": 300,
+        "evaluator_updates": 0,
+        "certificate_updates": 200
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "shadow",
+        "historical_trained_reference",
+        "historical_trained_identity"
+      ]
+    },
+    {
+      "id": "push",
+      "backend": "push_discrete_sac",
+      "config": {
+        "seed": 81,
+        "device": "cpu",
+        "num_envs": 32,
+        "initial_steps": 64,
+        "collection_steps": 64,
+        "batch_size": 256,
+        "replay_capacity": 100000,
+        "learning_rate": 0.0003,
+        "alpha_learning_rate": 0.0001,
+        "initial_alpha": 0.05,
+        "entropy_fraction": 0.5,
+        "target_tau": 0.01,
+        "validation_repeats": 8,
+        "test_repeats": 32,
+        "validation_seed_start": 2810000,
+        "test_seed_start": 2820000,
+        "train_shapes": [
+          "T",
+          "RectWide",
+          "L",
+          "Plus"
+        ],
+        "validation_shapes": [
+          "Square",
+          "UShape"
+        ],
+        "test_shapes": [
+          "OffsetComb3",
+          "AsymThreeBranch"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 1000,
+        "epochs": 1000,
+        "representation_updates": 0,
+        "evaluator_updates": 64,
+        "certificate_updates": 64
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_coupled_linear",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "coupled_linear",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_point_mass",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "point_mass",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_pendulum",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "pendulum",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_cartpole",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "cartpole",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "observer_motor_speed",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "motor_speed",
+        "seed": 81,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "training_index_start": 60000
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "observer_cartpole_output",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cartpole_output",
+        "seed": 81,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "training_index_start": 60000
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "observer_cooperative_pose",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cooperative_pose",
+        "seed": 81,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "training_index_start": 60000
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    }
+  ],
+  "absolute_deadline_unix": 1793148684,
+  "takeover_budget": {
+    "started_unix": 1793121684,
+    "overall_deadline_unix": 1793150484,
+    "training_deadline_unix": 1793148684,
+    "report_reserve_minutes": 30,
+    "preflight_included": true,
+    "no_resume": true
+  },
+  "historical_reference": {
+    "checkpoint": "D:/stabilization-learning/assets/original_visual_initialization/best.pt",
+    "original_checkpoint": "D:/书稿论文/lac_ae_certificate_vs/runs/ae_derivative_critic_seed41_20261019_v1/best.pt",
+    "checkpoint_sha256": "3edf4756000daa3373da2e2988c1ad5090201fdd45215aed2092bf1edaad6bca",
+    "source_paths": [
+      "D:/书稿论文/lac_ae_certificate_vs/runs/ae_derivative_critic_seed41_20261019_v1/best.pt",
+      "D:/stabilization-learning/assets/original_visual_initialization/best.pt",
+      "D:/书稿论文/lac_ae_certificate_vs/runs/ae_derivative_critic_seed41_20261019_v1/protocol.json",
+      "D:/stabilization-learning/assets/original_visual_initialization/protocol.json",
+      "D:/书稿论文/lac_ae_certificate_vs/runs/ae_derivative_critic_seed41_20261019_v1/resolved_config.yaml",
+      "D:/书稿论文/lac_ae_certificate_vs/runs/ae_derivative_critic_seed41_20261019_v1/training_complete.json",
+      "D:/书稿论文/lac_ae_certificate_vs/runs/ae_derivative_critic_seed41_20261019_v1/import_provenance.json",
+      "D:/书稿论文/lac_ae_certificate_vs/runtime/goal_fixed_core.py",
+      "D:/书稿论文/lac_ae_certificate_vs/runtime/derivative_critic_core.py",
+      "D:/书稿论文/lac_ae_certificate_vs/runtime/cae_vs_common.py",
+      "D:/书稿论文/lac_ae_certificate_vs/runtime/train_derivative_critic.py",
+      "D:/书稿论文/lac_ae_certificate_vs/lac_vs/models.py",
+      "D:/书稿论文/lac_ae_certificate_vs/lac_vs/vision.py",
+      "D:/stabilization-learning/artifacts/historical_reference_preflight_20261028/RESULT.json",
+      "D:/stabilization-learning/artifacts/historical_reference_identity_preflight_20261028/RESULT.json",
+      "D:/stabilization-learning/artifacts/historical_frozen_evaluator_preflight_20261028/PREFLIGHT_RESULT.json",
+      "D:/stabilization-learning/artifacts/night_seed81_device_preflight_20261028/RESULTS.json",
+      "D:/stabilization-learning/artifacts/night_seed81_device_fullchain_20261028/RESULTS.json",
+      "D:/stabilization-learning/artifacts/night_seed81_rgb_dual_history_memory_20261028/RESULTS.json",
+      "D:/stabilization-learning/artifacts/night_seed81_preflight_20261028/ENVIRONMENT_PACKAGES.txt",
+      "D:/stabilization-learning/handoff/NIGHT_SEED81_GPU_PLATFORM_20261028.txt"
+    ],
+    "selection_candidate": false,
+    "historical_seed": 41,
+    "historical_best_round": 24,
+    "test_scope": "same 72 starts, P0/P1, 200 steps, same success criteria, per RGB arm",
+    "added_test_episodes": 576,
+    "total_planned_test_episodes": 4800
+  },
+  "device_decision": {
+    "rgb": "cuda:0",
+    "push": "cpu",
+    "state": "cpu",
+    "observer": "cpu",
+    "rationale": "Training-only full-chain preflight favored CPU for Push and observer; original RGB path retained; no prepared executor.",
+    "push_snapshot": "evaluation-only compact snapshots; live replay retained; training resume prohibited",
+    "gpu_memory_preflight": "two RGB optimizers plus two initial and two historical model pairs and four-lane environment; short probe only"
+  }
+}

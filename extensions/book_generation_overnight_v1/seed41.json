@@ -1,0 +1,38 @@
+{
+  "schema": "book_e25_generation_v1",
+  "seed": 41,
+  "device": "cuda:0",
+  "assets": "D:/stabilization-learning/assets/book_generation_20261029",
+  "deadline_iso": "2026-10-29T09:00:00+08:00",
+  "maximum_minutes": 90,
+  "minimum_free_gib": 20,
+  "image_size": 512,
+  "steps": 20,
+  "cfg": 7.5,
+  "strengths": [0.0, 0.01, 0.03, 0.06],
+  "updates": 400,
+  "methods": ["original", "fixed", "backtracking", "learned"],
+  "train_prompts": [
+    {"id": "tr01", "text": "A studio photograph of a red ceramic mug on a white table."},
+    {"id": "tr02", "text": "A watercolor painting of a small wooden cabin in a green forest."},
+    {"id": "tr03", "text": "A photograph of a yellow bicycle leaning against a brick wall."},
+    {"id": "tr04", "text": "An oil painting of a sailboat on a calm blue lake."},
+    {"id": "tr05", "text": "A macro photograph of a purple flower covered in dew."},
+    {"id": "tr06", "text": "A photograph of an empty train station at sunset."}
+  ],
+  "validation_prompts": [
+    {"id": "va01", "text": "A close-up photograph of a polished copper sphere on black velvet."},
+    {"id": "va02", "text": "A photograph of a translucent glass vase on a wooden shelf."}
+  ],
+  "test_seeds": [810041, 810042],
+  "test_prompts": [
+    {"id": "count01", "family": "count", "text": "Exactly three green apples arranged in a row on a white plate."},
+    {"id": "count02", "family": "count", "text": "Exactly two orange cats sitting on a blue sofa."},
+    {"id": "space01", "family": "spatial", "text": "A red cube to the left of a blue sphere on a gray floor."},
+    {"id": "space02", "family": "spatial", "text": "A yellow umbrella above a black suitcase on a sidewalk."},
+    {"id": "text01", "family": "text", "text": "A clean storefront sign with the exact word OPEN in large black letters."},
+    {"id": "text02", "family": "text", "text": "A white greeting card displaying the exact word HELLO in blue letters."},
+    {"id": "unusual01", "family": "unusual", "text": "A transparent origami elephant floating inside a giant soap bubble."},
+    {"id": "unusual02", "family": "unusual", "text": "A teapot made of woven clouds resting on a tiny lunar crater."}
+  ]
+}

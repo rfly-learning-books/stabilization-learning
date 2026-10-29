@@ -1,0 +1,5 @@
+{
+  "env": "push_any_shape",
+  "env_kwargs": {"shape_name": "T", "max_steps": 100, "speed_points": 65},
+  "training": {"episodes": 96, "batch_episodes": 12, "learning_rate": 0.00002, "certificate_weight": 0.1, "seed": 41}
+}

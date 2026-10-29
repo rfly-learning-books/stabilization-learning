@@ -1,0 +1,53 @@
+{
+  "schema": "unified_training_v4",
+  "maximum_minutes": 12,
+  "minimum_free_gib": 1,
+  "deterministic": true,
+  "runtime_lock": "configs/reproducible_training_v4/runtime_gpu_lock_v2.json",
+  "scope": "Isolated GPU engineering reproducibility; two tiny real update sequences; not a training-performance experiment",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 4070 Ti",
+    "uuid": "GPU-c79d903b-4049-7ee4-da41-befc39434453",
+    "driver": "610.60"
+  },
+  "jobs": [
+    {
+      "id": "rgb_engineering",
+      "backend": "rgb_legacy",
+      "config": {
+        "device": "cuda:0",
+        "seed": 83561,
+        "cpu_threads": 1,
+        "batch_size": 1,
+        "probe_batch_size": 1,
+        "replay_capacity": 64,
+        "replay_cached_episodes": 4,
+        "train_scene_count": 1,
+        "validation_cases": 1,
+        "test_cases": 1,
+        "evaluation_steps": 2,
+        "initial_collection_steps": 4,
+        "collection_steps": 4,
+        "parallel_envs": 1,
+        "evaluation_batch": 1,
+        "evaluation_plants": [
+          "P0",
+          "P1"
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "warmup_representation": 1,
+        "pretrain_evaluator": 1,
+        "representation_updates": 1,
+        "evaluator_updates": 1,
+        "certificate_updates": 1
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    }
+  ]
+}

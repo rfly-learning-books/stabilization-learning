@@ -1,0 +1,39 @@
+{
+  "schema": "unified_training_v4",
+  "maximum_minutes": 20,
+  "minimum_free_gib": 0.1,
+  "deterministic": true,
+  "scope": "Portable asset-free lifecycle smoke test; not a performance benchmark",
+  "jobs": [
+    {
+      "id": "state_point_mass",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "point_mass",
+        "seed": 83511,
+        "total_updates": 1,
+        "batch_size": 1,
+        "hidden": 8,
+        "scales": [
+          1.0
+        ],
+        "validation_seeds": [
+          9835102
+        ],
+        "test_seeds": [
+          9835202
+        ],
+        "probe_batch": 4,
+        "attack_steps": 1,
+        "checkpoint_stride": 4,
+        "physical": {
+          "max_steps": 12
+        }
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    }
+  ]
+}

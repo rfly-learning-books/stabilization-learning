@@ -1,0 +1,171 @@
+{
+  "schema": "unified_training_v4",
+  "maximum_minutes": 15,
+  "minimum_free_gib": 20,
+  "deterministic": true,
+  "runtime_lock": "configs/reproducible_training_v4/runtime_cpu_lock_v3.json",
+  "scope": "Engineering repeatability check: three tasks, full horizons, production batch and network, two epochs, all declared evaluation scenarios. Not a scientific long-training result.",
+  "jobs": [
+    {
+      "id": "observer_motor_speed",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "motor_speed",
+        "seed": 41,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "training_index_start": 1000,
+        "validation_index_start": 72000,
+        "test_index_start": 80000,
+        "validation_count": 32,
+        "test_count": 6,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "validation_scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "test_scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch",
+          "bounded_noise",
+          "initial_offset"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 2,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 2
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "fixed_M"
+      ]
+    },
+    {
+      "id": "observer_cartpole_output",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cartpole_output",
+        "seed": 41,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "training_index_start": 21000,
+        "validation_index_start": 73000,
+        "test_index_start": 81000,
+        "validation_count": 32,
+        "test_count": 6,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "validation_scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "test_scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch",
+          "bounded_noise",
+          "initial_offset"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 2,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 2
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "fixed_M"
+      ]
+    },
+    {
+      "id": "observer_cooperative_pose",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cooperative_pose",
+        "seed": 41,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "training_index_start": 41000,
+        "validation_index_start": 74000,
+        "test_index_start": 82000,
+        "validation_count": 32,
+        "test_count": 8,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "validation_scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "test_scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch",
+          "bounded_noise",
+          "initial_offset",
+          "degenerate",
+          "wrong_match"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 2,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 2
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "fixed_M"
+      ]
+    }
+  ]
+}

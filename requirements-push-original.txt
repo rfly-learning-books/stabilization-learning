@@ -1,0 +1,2 @@
+# Install core requirements first. Select PyTorch CPU/CUDA for the local hardware.
+-r requirements-simulation.txt

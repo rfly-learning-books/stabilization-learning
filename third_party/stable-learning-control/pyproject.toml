@@ -1,0 +1,103 @@
+# NOTE: Ensure you have pip>=21.3.1 when you want to install this package in editable mode.
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+# Project configuration.
+[project]
+name = "stable_learning_control"
+dynamic = ["version", "readme"]
+authors = [
+    {name = "Rick Staa", email = "rick.staa@outlook.com"}
+]
+license = {file = "LICENSE"}
+description = "A framework for training theoretically stable (and robust) Reinforcement Learning control algorithms."
+keywords = [
+    "reinforcement-learning",
+    "control",
+    "stability",
+    "robustness",
+    "simulation",
+    "openai-gym",
+    "gymnasium",
+    "artificial-intelligence",
+    "deep-learning",
+    "neural-networks",
+    "machine-learning",
+    "framework",
+    "gaussian-networks",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Natural Language :: English",
+    "Topic :: Scientific/Engineering"
+]
+dependencies = [
+    "gymnasium>=0.29.1",
+    "numpy>=1.23.5",
+    "scipy>=1.10.1",
+    "torch>=1.5",
+    "joblib>=1.2.0",
+    "tensorboard>=2.11.2",
+    "wandb>=0.15.8",
+    "psutil>=5.9.5",
+    "tqdm>=4.65.0",
+    "cloudpickle>=2.2.1",
+    "matplotlib>=3.7.1",
+    "ruamel.yaml>=0.17.32",
+    "ray[default]>=2.5.1",
+    "pandas>=2.0.2",
+    "seaborn>=0.12.2",
+    "mpi4py>=3.1.4",
+]
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+# NOTE: Ensure you have pip>=21.2 for the recursive dependencies to work.
+tf2 = [
+    "tensorflow>=2.12.0",
+    "tensorflow-probability>=0.20.1",
+]
+tuning = [
+    "ray[tune]>=2.5.1",
+    "ray[air]>=2.5.1",
+    "hyperopt>=0.2.7",
+]
+dev = [
+    "stable-learning_control[tf2,tuning]",
+    "pytest>=7.3.2",
+    "pytest-cov>=4.1.0",
+    "pytest-html>=3.2.0",
+    "syrupy>=4.0.2",
+    "flake8>=6.0.0",
+    "black>=23.3.0",
+    "isort>=5.12.0",
+]
+docs = [
+    "stable_learning_control[tf2,tuning]",
+    "sphinx>=7.1.2",
+    "sphinx_rtd_theme>=1.3.0",
+    "myst-parser>=1.0.0",
+    "sphinx-autoapi>=2.1.1"
+]
+mujoco = [
+    "gymnasium[mujoco]>=0.29.1",
+]
+
+[project.urls]
+repository = "https://github.com/rickstaa/stable-learning-control"
+source = "https://github.com/rickstaa/stable-learning-control"
+documentation = "https://rickstaa.dev/stable-learning-control"
+
+# Python tools configuration.
+[tool.setuptools]
+packages = ["stable_learning_control"]
+
+[tool.setuptools.dynamic]
+readme = {file = "README.md", content-type = "text/markdown"}
+
+[tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]

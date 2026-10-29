@@ -1,0 +1,8 @@
+{
+  "time": 1.0,
+  "error": 1.0,
+  "switch": 0.25,
+  "input_square": 0.02,
+  "success_bonus": 200.0,
+  "failure_penalty": 600.0
+}

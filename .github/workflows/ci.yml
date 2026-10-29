@@ -1,0 +1,17 @@
+name: core-tests
+on: [push, pull_request]
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -r requirements.txt -r requirements-dev.txt -r requirements-simulation.txt
+      - run: python -m pytest -q
+      - run: python scripts/check_publication.py
+      - run: python -m stabilization_learning train --config configs/public/point_mass_smoke.json --output runs/ci_point_mass
+      - run: python -m stabilization_learning evaluate --run runs/ci_point_mass --seeds 20001 20002

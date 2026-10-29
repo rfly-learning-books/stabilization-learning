@@ -1,0 +1,36 @@
+{
+  "seed": 41,
+  "evaluation_seed": 2026102841,
+  "device": "cuda:0",
+  "maximum_minutes": 10,
+  "evaluation_reserve_minutes": 0,
+  "minimum_free_gib": 8,
+  "engineering_smoke": true,
+  "train_scene_limit": 1,
+  "parallel_envs": 16,
+  "image_bank_capacity": 256,
+  "initial_collection_steps": 8,
+  "ae_batch_size": 16,
+  "ae_learning_rate": 1E-05,
+  "ae_updates": 3,
+  "replay_capacity": 512,
+  "collection_steps": 12,
+  "post_success_steps": 2,
+  "evaluation_steps": 12,
+  "outside_tolerance_cost": 0.1,
+  "batch_size": 512,
+  "critic_pretrain": 4,
+  "epochs": 1,
+  "rooms_per_epoch": 1,
+  "q_updates_per_room": 4,
+  "m_updates_per_room": 2,
+  "val_cases": 4,
+  "test_cases": 4,
+  "evaluation_plants": [
+    "P0",
+    "P1"
+  ],
+  "learner": {
+    "hidden": 256
+  }
+}

@@ -1,0 +1,5 @@
+# Default asset-free publication tests; research tests are selected explicitly.
+[tool.pytest.ini_options]
+testpaths = ["tests/test_core.py", "tests/test_classic_envs.py", "tests/test_robotics_envs.py", "tests/test_training.py", "tests/test_publication.py"]
+pythonpath = [".", "stabilization-gym", "stabilization-learning-control"]
+markers = ["external_assets: requires separately supplied data or models", "integration: repository-level integration"]

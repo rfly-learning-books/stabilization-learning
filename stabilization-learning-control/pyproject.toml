@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stabilization-learning-control"
+version = "0.2.0"
+readme = "README.md"
+description = "Shared feature and Cholesky metric learning with formal task controllers"
+requires-python = ">=3.10"
+dependencies = ["stabilization-gym>=0.2.0", "numpy", "scipy", "torch>=2.0", "gymnasium>=0.29", "matplotlib"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+slc = ["joblib", "tensorboard>=2.11.2", "cloudpickle", "pandas", "psutil", "tqdm", "wandb", "ruamel.yaml", "seaborn"]
+
+[project.scripts]
+stabilization-learn = "stabilization_learning.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["stabilization_learning*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+

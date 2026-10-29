@@ -1,0 +1,424 @@
+{
+  "schema": "unified_training_v4",
+  "maximum_minutes": 20,
+  "minimum_free_gib": 1,
+  "deterministic": true,
+  "runtime_lock": "configs/reproducible_training_v4/runtime_cpu_lock_v3.json",
+  "scope": "CPU engineering reproduction only; shortened horizons/configurations are NOT scientific performance benchmarks",
+  "jobs": [
+    {
+      "id": "state_coupled_linear",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "coupled_linear",
+        "seed": 83510,
+        "total_updates": 1,
+        "batch_size": 1,
+        "hidden": 8,
+        "scales": [
+          1.0
+        ],
+        "validation_seeds": [
+          9835101
+        ],
+        "test_seeds": [
+          9835201
+        ],
+        "probe_batch": 4,
+        "attack_steps": 1,
+        "checkpoint_stride": 4,
+        "physical": {
+          "max_steps": 12
+        }
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "state_point_mass",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "point_mass",
+        "seed": 83511,
+        "total_updates": 1,
+        "batch_size": 1,
+        "hidden": 8,
+        "scales": [
+          1.0
+        ],
+        "validation_seeds": [
+          9835102
+        ],
+        "test_seeds": [
+          9835202
+        ],
+        "probe_batch": 4,
+        "attack_steps": 1,
+        "checkpoint_stride": 4,
+        "physical": {
+          "max_steps": 12
+        }
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "state_pendulum",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "pendulum",
+        "seed": 83512,
+        "total_updates": 1,
+        "batch_size": 1,
+        "hidden": 8,
+        "scales": [
+          1.0
+        ],
+        "validation_seeds": [
+          9835103
+        ],
+        "test_seeds": [
+          9835203
+        ],
+        "probe_batch": 4,
+        "attack_steps": 1,
+        "checkpoint_stride": 4,
+        "physical": {
+          "max_steps": 12
+        }
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "state_cartpole",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "cartpole",
+        "seed": 83513,
+        "total_updates": 1,
+        "batch_size": 1,
+        "hidden": 8,
+        "scales": [
+          1.0
+        ],
+        "validation_seeds": [
+          9835104
+        ],
+        "test_seeds": [
+          9835204
+        ],
+        "probe_batch": 4,
+        "attack_steps": 1,
+        "checkpoint_stride": 4,
+        "physical": {
+          "max_steps": 12
+        }
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "observer_motor_speed",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "motor_speed",
+        "seed": 83520,
+        "batch_size": 1,
+        "hidden": 8,
+        "validation_count": 1,
+        "test_count": 1,
+        "training_index_start": 83500,
+        "validation_index_start": 84500,
+        "test_index_start": 85500,
+        "scenarios": [
+          "nominal"
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "observer_cartpole_output",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cartpole_output",
+        "seed": 83521,
+        "batch_size": 1,
+        "hidden": 8,
+        "validation_count": 1,
+        "test_count": 1,
+        "training_index_start": 83600,
+        "validation_index_start": 84600,
+        "test_index_start": 85600,
+        "scenarios": [
+          "nominal"
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "observer_cooperative_pose",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cooperative_pose",
+        "seed": 83522,
+        "batch_size": 2,
+        "hidden": 8,
+        "validation_count": 1,
+        "test_count": 1,
+        "training_index_start": 83700,
+        "validation_index_start": 84700,
+        "test_index_start": 85700,
+        "scenarios": [
+          "nominal",
+          "degenerate"
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "arm",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "two_link_arm",
+        "physical": {
+          "max_steps": 60,
+          "initial_scale": 0.01
+        },
+        "seed": 83530,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840000
+        ],
+        "test_seeds": [
+          9850000
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "unicycle",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "unicycle_tracking",
+        "physical": {
+          "radius": 0.1,
+          "reference_speed": 0.2,
+          "dt": 0.1,
+          "max_steps": 8,
+          "initial_scale": 0.01
+        },
+        "seed": 83531,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840001
+        ],
+        "test_seeds": [
+          9850001
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "hover",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "multirotor_hover",
+        "physical": {
+          "dt": 0.1,
+          "max_steps": 20,
+          "initial_scale": 0.01
+        },
+        "seed": 83532,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840002
+        ],
+        "test_seeds": [
+          9850002
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "circle",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "multirotor_circle",
+        "physical": {
+          "radius": 0.03,
+          "reference_omega": 1.0,
+          "dt": 0.1,
+          "max_steps": 8,
+          "initial_scale": 0.01
+        },
+        "seed": 83533,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840003
+        ],
+        "test_seeds": [
+          9850003
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "visual_p0",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "visual_servo",
+        "physical": {
+          "plant": "P0",
+          "image_size": 32,
+          "max_steps": 12
+        },
+        "seed": 83534,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840004
+        ],
+        "test_seeds": [
+          9850004
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "visual_p1",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "visual_servo",
+        "physical": {
+          "plant": "P1",
+          "image_size": 32,
+          "max_steps": 12
+        },
+        "seed": 83535,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840005
+        ],
+        "test_seeds": [
+          9850005
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "push_generic",
+      "backend": "episode_ppo",
+      "config": {
+        "task": "push_any_shape",
+        "physical": {
+          "max_steps": 12
+        },
+        "seed": 83536,
+        "total_updates": 1,
+        "batch_episodes": 1,
+        "epochs": 1,
+        "validation_seeds": [
+          9840006
+        ],
+        "test_seeds": [
+          9850006
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "motor_state_dependent",
+      "backend": "dc_motor_gradient",
+      "config": {
+        "seed": 83540,
+        "total_updates": 1,
+        "batch_size": 2,
+        "hidden": 8,
+        "validation_seeds": [
+          9860001
+        ],
+        "test_seeds": [
+          9870001
+        ]
+      },
+      "schedule": {
+        "epochs": 1,
+        "certificate_updates": 1
+      }
+    },
+    {
+      "id": "push_timeaware",
+      "backend": "push_discrete_sac",
+      "config": {
+        "seed": 83550,
+        "device": "cpu",
+        "time_bank": "D:\\stabilization-learning\\runs\\scratch_apps_so101_full_v1_20261026_184356\\so101_environment\\time_bank.json",
+        "num_envs": 2,
+        "initial_steps": 4,
+        "collection_steps": 2,
+        "batch_size": 8,
+        "replay_capacity": 64,
+        "validation_repeats": 1,
+        "test_repeats": 1,
+        "validation_seed_start": 6381000,
+        "test_seed_start": 6382000
+      },
+      "schedule": {
+        "epochs": 1,
+        "pretrain_evaluator": 1,
+        "evaluator_updates": 1,
+        "certificate_updates": 1
+      }
+    }
+  ]
+}

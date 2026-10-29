@@ -1,0 +1,31 @@
+{
+  "schema": "book_multiseed_v4",
+  "tasks": ["coupled_linear", "point_mass", "pendulum", "cartpole"],
+  "seeds": [41, 42, 43, 44, 45],
+  "hidden": 16,
+  "residual_limit": 1.0,
+  "maximum_seconds": 28800,
+  "validation_count": 48,
+  "test_count": 64,
+  "training": {
+    "updates": 256,
+    "batch_states": 16,
+    "validation_every": 16,
+    "checkpoint_stride": 32,
+    "learning_rate": 0.003,
+    "patience": 17
+  },
+  "task_overrides": {
+    "coupled_linear": {"arrival_weight": 0.02, "max_arrival_delay": 0.15},
+    "point_mass": {"arrival_weight": 0.2, "max_arrival_delay": 0.1},
+    "pendulum": {"arrival_weight": 0.2, "max_arrival_delay": 0.1},
+    "cartpole": {"arrival_weight": 0.02, "max_arrival_delay": 0.15}
+  },
+  "selection": "Physical cost only ranks validation candidates after all unchanged feasibility gates. Same per-task settings for all five seeds, fixed before tests. Commit all twenty selections before any test. Never select a best seed or tune on test results.",
+  "comparators": ["fixed_P0", "classical_SDRE", "learned", "last_candidate"],
+  "aliases": "initial equals fixed_P0; classical_SDRE equals fixed_P0 on the two linear tasks; identical selected/last models counted once",
+  "statistics": "Report every seed and every scale, between-training-seed mean and sample SD. Within-seed paired initial-state intervals are distinct. Five training seeds are limited evidence.",
+  "scope": "Four existing physical bases; not exact reproduction of book acceleration pendulum, cart, visual disk, or all four specialized application chapters. CPU float64 full-horizon model gradients; no new global or nonlinear-domain stability proof.",
+  "book_disk": "Separate chapter8/9 D-learning numerical study, not neural-M or visual-disk training.",
+  "prior_evidence": "Per-task objective settings inherited from sealed v3 bounded studies; those studies are development evidence, this is a new multi-seed protocol."
+}

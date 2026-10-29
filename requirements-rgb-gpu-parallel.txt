@@ -1,0 +1,5 @@
+# Optional renderer overlay for an existing project + CUDA PyTorch environment.
+# The 2026-10-27 Windows benchmark inherited torch 2.3.0+cu121 / numpy 1.26.4.
+mujoco==3.17.0
+mujoco-warp==3.17.0
+warp-lang==1.18.0

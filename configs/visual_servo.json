@@ -1,0 +1,5 @@
+{
+  "env": "visual_servo",
+  "env_kwargs": {"max_steps": 300, "split": "train", "scene_id": 0, "depth_mode": "constant", "plant": "P0"},
+  "training": {"episodes": 96, "batch_episodes": 12, "learning_rate": 0.00002, "certificate_weight": 0.1, "seed": 41}
+}

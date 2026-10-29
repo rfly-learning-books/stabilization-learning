@@ -1,0 +1,8 @@
+{
+  "legacy_workspace": "external_assets/book",
+  "push_source": "third_party/push_original",
+  "push_library": "external_assets/push_library",
+  "visual_legacy_project": "external_assets/visual_legacy_project",
+  "fastdepth": "external_assets/fastdepth"
+}
+

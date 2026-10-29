@@ -1,0 +1,136 @@
+{
+  "schema": "unified_training_v4",
+  "maximum_minutes": 10,
+  "minimum_free_gib": 1,
+  "deterministic": true,
+  "runtime_lock": "configs/reproducible_training_v4/runtime_cpu_lock_v3.json",
+  "scope": "engineering observer path verification only",
+  "jobs": [
+    {
+      "id": "observer_motor_speed",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "motor_speed",
+        "seed": 41,
+        "cpu_threads": 1,
+        "batch_size": 2,
+        "hidden": 8,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "training_index_start": 1000,
+        "validation_index_start": 72000,
+        "test_index_start": 80000,
+        "validation_count": 1,
+        "test_count": 1,
+        "scenarios": [
+          "nominal"
+        ],
+        "validation_scenarios": [
+          "nominal"
+        ],
+        "test_scenarios": [
+          "nominal"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 1,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 1
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "fixed_M"
+      ]
+    },
+    {
+      "id": "observer_cartpole_output",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cartpole_output",
+        "seed": 41,
+        "cpu_threads": 1,
+        "batch_size": 2,
+        "hidden": 8,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "training_index_start": 21000,
+        "validation_index_start": 73000,
+        "test_index_start": 81000,
+        "validation_count": 1,
+        "test_count": 1,
+        "scenarios": [
+          "nominal"
+        ],
+        "validation_scenarios": [
+          "nominal"
+        ],
+        "test_scenarios": [
+          "nominal"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 1,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 1
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "fixed_M"
+      ]
+    },
+    {
+      "id": "observer_cooperative_pose",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cooperative_pose",
+        "seed": 41,
+        "cpu_threads": 1,
+        "batch_size": 2,
+        "hidden": 8,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "training_index_start": 41000,
+        "validation_index_start": 74000,
+        "test_index_start": 82000,
+        "validation_count": 1,
+        "test_count": 1,
+        "scenarios": [
+          "nominal"
+        ],
+        "validation_scenarios": [
+          "nominal"
+        ],
+        "test_scenarios": [
+          "nominal"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 1,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 1
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "fixed_M"
+      ]
+    }
+  ]
+}

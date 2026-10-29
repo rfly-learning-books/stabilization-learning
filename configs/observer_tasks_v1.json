@@ -1,0 +1,21 @@
+{
+  "schema": "book-observation-task-engineering-v1",
+  "purpose": "Task and metric acceptance only; no fitting, model selection or formal test evaluation",
+  "tasks": ["motor_speed", "cartpole_output", "cooperative_pose"],
+  "scenarios": ["nominal", "noise", "occlusion", "mismatch"],
+  "additional_pose_scenario": "degenerate",
+  "methods": ["prediction_only", "kalman_ekf", "fixed_M", "variable_M_probe"],
+  "split": "engineering",
+  "trajectory_indices": [1, 2],
+  "training_updates": 0,
+  "variable_metric_probe_amplitude": 0.15,
+  "certificate_alpha_per_second": 0.1,
+  "certificate_tolerance": 1e-9,
+  "noise_allowance_per_second": {"motor_speed": 0.01, "cartpole_output": 0.01, "cooperative_pose": 0.02},
+  "noise_allowance_claim": "Fixed engineering diagnostics, not proven stochastic or bounded-disturbance guarantees",
+  "information_window_seconds": 0.5,
+  "failure_tail_cost_rate": 25.0,
+  "book_root": "E:/rfly-books/Rfly-Stable-Learning-Book_Reviewed_20261022",
+  "formal_training_authorized_by_this_config": false,
+  "stability_claim": "Sampled local diagnostics only; no global or nonlinear-domain proof"
+}

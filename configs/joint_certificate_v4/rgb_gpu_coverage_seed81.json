@@ -1,0 +1,22 @@
+{
+  "seed": 81,
+  "scope": "formal_training",
+  "device": "cuda:0",
+  "warmup_updates": 1000,
+  "joint_pairs": 6500,
+  "batch_size": 16,
+  "parallel_envs": 16,
+  "collection_horizon": 64,
+  "collection_pairs": [0, 1000, 2500, 4000, 5500],
+  "transitions_per_stratum": [80, 64, 64, 64, 64],
+  "random_episode_fraction_after_bootstrap": 0.5,
+  "random_action_hold_steps": 8,
+  "validation_pairs": [1300, 2600, 3900, 5200, 6500],
+  "evaluation_max_steps": 200,
+  "calibration_samples": 384,
+  "probe_count": 8,
+  "mmap_episodes": 64,
+  "max_hours": 3.0,
+  "minimum_free_gib": 30.0,
+  "evaluation_starts": "runs/scratch_apps_so101_full_v1_20261026_184356/rgb_seed71/evaluation_starts.json"
+}

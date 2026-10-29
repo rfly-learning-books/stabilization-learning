@@ -1,0 +1,365 @@
+{
+  "schema": "unified_training_v1",
+  "maximum_minutes": 480,
+  "minimum_free_gib": 30,
+  "description": "PROPOSED Terra overnight seed81 suite. Do not auto-launch from the handoff task. Perform declared preflight, freeze resolved config, then one new budget. Two RGB batch arms; no test-driven selection between arms.",
+  "jobs": [
+    {
+      "id": "rgb_batch4_reference",
+      "backend": "rgb_legacy",
+      "config": {
+        "seed": 81,
+        "device": "cuda:0",
+        "batch_size": 4,
+        "parallel_envs": 16,
+        "train_scene_count": 24,
+        "initial_collection_steps": 24,
+        "collection_steps": 24,
+        "validation_cases": 48,
+        "test_cases": 72,
+        "evaluation_steps": 200,
+        "evaluation_batch": 4,
+        "cpu_threads": 2,
+        "replay_capacity": 50000,
+        "replay_cached_episodes": 96
+      },
+      "schedule": {
+        "warmup_representation": 1000,
+        "pretrain_evaluator": 1000,
+        "epochs": 24,
+        "representation_updates": 300,
+        "evaluator_updates": 0,
+        "certificate_updates": 200
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "shadow"
+      ]
+    },
+    {
+      "id": "rgb_batch16_throughput",
+      "backend": "rgb_legacy",
+      "config": {
+        "seed": 81,
+        "device": "cuda:0",
+        "batch_size": 16,
+        "parallel_envs": 16,
+        "train_scene_count": 24,
+        "initial_collection_steps": 24,
+        "collection_steps": 24,
+        "validation_cases": 48,
+        "test_cases": 72,
+        "evaluation_steps": 200,
+        "evaluation_batch": 4,
+        "cpu_threads": 2,
+        "replay_capacity": 50000,
+        "replay_cached_episodes": 96
+      },
+      "schedule": {
+        "warmup_representation": 1000,
+        "pretrain_evaluator": 1000,
+        "epochs": 24,
+        "representation_updates": 300,
+        "evaluator_updates": 0,
+        "certificate_updates": 200
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity",
+        "shadow"
+      ]
+    },
+    {
+      "id": "push",
+      "backend": "push_discrete_sac",
+      "config": {
+        "seed": 81,
+        "device": "cpu",
+        "num_envs": 32,
+        "initial_steps": 64,
+        "collection_steps": 64,
+        "batch_size": 256,
+        "replay_capacity": 100000,
+        "learning_rate": 0.0003,
+        "alpha_learning_rate": 0.0001,
+        "initial_alpha": 0.05,
+        "entropy_fraction": 0.5,
+        "target_tau": 0.01,
+        "validation_repeats": 8,
+        "test_repeats": 32,
+        "validation_seed_start": 2810000,
+        "test_seed_start": 2820000,
+        "train_shapes": [
+          "T",
+          "RectWide",
+          "L",
+          "Plus"
+        ],
+        "validation_shapes": [
+          "Square",
+          "UShape"
+        ],
+        "test_shapes": [
+          "OffsetComb3",
+          "AsymThreeBranch"
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 1000,
+        "epochs": 1000,
+        "representation_updates": 0,
+        "evaluator_updates": 64,
+        "certificate_updates": 64
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_coupled_linear",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "coupled_linear",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_point_mass",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "point_mass",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_pendulum",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "pendulum",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "state_cartpole",
+      "backend": "state_model_gradient",
+      "config": {
+        "task": "cartpole",
+        "seed": 81,
+        "cpu_threads": 1,
+        "total_updates": 128,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 16,
+        "learning_rate": 0.003,
+        "scales": [
+          1,
+          1.5,
+          2
+        ]
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "observer_motor_speed",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "motor_speed",
+        "seed": 81,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "training_index_start": 60000
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "observer_cartpole_output",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cartpole_output",
+        "seed": 81,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "training_index_start": 60000
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    },
+    {
+      "id": "observer_cooperative_pose",
+      "backend": "observer_model_gradient",
+      "config": {
+        "task": "cooperative_pose",
+        "seed": 81,
+        "cpu_threads": 1,
+        "batch_size": 16,
+        "validation_count": 16,
+        "test_count": 64,
+        "hidden": 32,
+        "metric_radius": 3,
+        "learning_rate": 0.003,
+        "gradient_clip": 2,
+        "scenarios": [
+          "nominal",
+          "noise",
+          "occlusion",
+          "mismatch"
+        ],
+        "training_index_start": 60000
+      },
+      "schedule": {
+        "warmup_representation": 0,
+        "pretrain_evaluator": 0,
+        "epochs": 16,
+        "representation_updates": 0,
+        "evaluator_updates": 0,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "initial",
+        "identity"
+      ]
+    }
+  ]
+}

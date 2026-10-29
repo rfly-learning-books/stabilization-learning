@@ -1,0 +1,11 @@
+{
+  "seed":41,"evaluation_seed":2026102841,"device":"cuda:0",
+  "maximum_minutes":180,"evaluation_reserve_minutes":40,"minimum_free_gib":8,
+  "engineering_smoke":false,"parallel_envs":16,
+  "image_bank_capacity":8192,"initial_collection_steps":60,"ae_batch_size":16,
+  "ae_learning_rate":0.00001,"ae_updates":1000,"replay_capacity":100000,
+  "collection_steps":120,"post_success_steps":50,"evaluation_steps":200,
+  "outside_tolerance_cost":0.1,"batch_size":512,"critic_pretrain":1000,
+  "epochs":12,"rooms_per_epoch":6,"q_updates_per_room":64,"m_updates_per_room":32,
+  "val_cases":48,"test_cases":72,"evaluation_plants":["P0","P1"],"learner":{}
+}

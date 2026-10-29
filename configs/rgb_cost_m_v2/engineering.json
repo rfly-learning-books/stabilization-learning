@@ -1,0 +1,85 @@
+{
+  "schema": "unified_training_v1",
+  "maximum_minutes": 30,
+  "minimum_free_gib": 20,
+  "description": "Random AE and supervised feature pretraining, frozen coordinates, double physical-action cost Q and constrained M updates. No old model or replay. Independent raw and accepted validation curves.",
+  "jobs": [
+    {
+      "id": "rgb_cost_m_engineering",
+      "backend": "rgb_legacy",
+      "config": {
+        "seed": 41,
+        "device": "cuda:0",
+        "batch_size": 8,
+        "parallel_envs": 16,
+        "initial_collection_steps": 12,
+        "collection_steps": 8,
+        "boundary_steps": 4,
+        "post_success_steps": 50,
+        "maximum_episodes_per_room": 128,
+        "replay_capacity": 30000,
+        "regular_collection_quotas": [
+          {
+            "classroom_train_00": 8,
+            "classroom_train_01": 8
+          },
+          {
+            "classroom_train_00": 8,
+            "classroom_train_01": 8
+          }
+        ],
+        "case_manifest": "D:\\stabilization-learning\\configs\\rgb_cost_m_v2\\engineering_cases.json",
+        "validation_cases": 2,
+        "test_cases": 2,
+        "evaluation_steps": 60,
+        "evaluation_batch": 16,
+        "evaluation_plants": [
+          "P0",
+          "P1"
+        ],
+        "probe_batch_size": 4,
+        "retention_diagnostic": true,
+        "retention_variants": [
+          "selected",
+          "identity"
+        ],
+        "target_successes": 38,
+        "stability": {
+          "encoder_lr": 1e-05,
+          "critic_lr": 0.0001,
+          "metric_lr": 0.0001,
+          "critic_encoder_gradient_cap": 0.5,
+          "aux_gradient_cap": 0.2,
+          "progress_fraction": 0.04,
+          "interior_rho": 0.5,
+          "action_trust_mean": 0.01,
+          "action_trust_max": 0.05,
+          "guard_batch": 8,
+          "q_lr": 0.0003,
+          "gamma": 0.99,
+          "target_tau": 0.01
+        },
+        "engineering": true,
+        "train_scene_count": 2,
+        "q_batch_size": 32,
+        "metric_batch_size": 16,
+        "representation_prefit_updates": 4,
+        "q_prefit_updates": 8
+      },
+      "schedule": {
+        "warmup_representation": 16,
+        "pretrain_evaluator": 8,
+        "epochs": 2,
+        "representation_updates": 0,
+        "evaluator_updates": 4,
+        "certificate_updates": 8
+      },
+      "test_variants": [
+        "selected",
+        "identity",
+        "initial",
+        "shadow"
+      ]
+    }
+  ]
+}

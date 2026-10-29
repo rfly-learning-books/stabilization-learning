@@ -1,0 +1,26 @@
+{
+  "seed": 81,
+  "updates": 1000,
+  "num_envs": 32,
+  "horizon": 64,
+  "epochs": 4,
+  "minibatch": 256,
+  "learning_rate": 0.0003,
+  "eval_every": 20,
+  "validation_repeats": 4,
+  "device": "cpu",
+  "train_shapes": [
+    "T",
+    "RectWide",
+    "L",
+    "Plus"
+  ],
+  "validation_shapes": [
+    "Square",
+    "UShape"
+  ],
+  "test_shapes": [
+    "OffsetComb3",
+    "AsymThreeBranch"
+  ]
+}

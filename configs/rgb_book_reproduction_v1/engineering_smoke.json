@@ -1,0 +1,76 @@
+{
+  "schema": "unified_training_v1",
+  "maximum_minutes": 15,
+  "minimum_free_gib": 20,
+  "book_protocol": {
+    "mode": "engineering",
+    "validation_every": 1,
+    "diagnostic_initial": false,
+    "diagnostic_ready": false,
+    "select_initial": false,
+    "select_ready": false
+  },
+  "source_files": [],
+  "comparative_sources": {},
+  "jobs": [
+    {
+      "id": "rgb_book_engineering",
+      "backend": "rgb_legacy",
+      "test_variants": [
+        "selected",
+        "identity",
+        "shadow",
+        "initial_identity"
+      ],
+      "schedule": {
+        "warmup_representation": 2,
+        "pretrain_evaluator": 2,
+        "epochs": 2,
+        "representation_updates": 2,
+        "evaluator_updates": 0,
+        "certificate_updates": 2
+      },
+      "config": {
+        "seed": 41,
+        "device": "cuda:0",
+        "cpu_threads": 2,
+        "epochs": 2,
+        "batch_size": 4,
+        "collection_steps": 3,
+        "trajectories_per_scene": 1,
+        "bootstrap_transitions": 2822,
+        "train_scene_count": 1,
+        "replay_capacity": 20000,
+        "replay_cached_episodes": 16,
+        "probe_batch_size": 4,
+        "minimum_free_gib": 20,
+        "validation_plants": [
+          "P0"
+        ],
+        "validation_steps": 3,
+        "validation_cases": 1,
+        "bootstrap_root": "D:/stabilization-learning/assets/reconstructed_visual_bootstrap_20261023_v1",
+        "book_cases": "D:/stabilization-learning/assets/reconstructed_visual_bootstrap_20261023_v1/evaluation_starts.json",
+        "initial_checkpoint": "D:/stabilization-learning/assets/original_visual_initialization/initial.pt",
+        "generalization_suites": [
+          {
+            "name": "engineering_val_only",
+            "cases": "val",
+            "case_limit": 1,
+            "variants": [
+              "selected",
+              "identity",
+              "shadow",
+              "initial_identity"
+            ],
+            "plants": [
+              "P0",
+              "P1"
+            ],
+            "steps": 3
+          }
+        ]
+      }
+    }
+  ]
+}

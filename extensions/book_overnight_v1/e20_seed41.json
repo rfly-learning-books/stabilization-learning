@@ -1,0 +1,35 @@
+{
+  "schema": "book_e20_overnight_v1",
+  "seed": 41,
+  "test_seed": 2026102901,
+  "maximum_seconds": 7200,
+  "time_bank": "D:/书稿论文/push_any_shape_compact_package/runs/time_abc_full_20260920/time_bank.json",
+  "initial_checkpoint": "D:/书稿论文/push_any_shape_compact_package/media/so101_contact/contact_full_m.pt",
+  "train_shapes": [
+    "T",
+    "RectWide",
+    "Square",
+    "L",
+    "Plus",
+    "UShape"
+  ],
+  "test_shapes": [
+    "T",
+    "RectWide",
+    "Square",
+    "L",
+    "Plus",
+    "UShape",
+    "OffsetComb3",
+    "AsymThreeBranch"
+  ],
+  "updates": 300,
+  "num_envs": 32,
+  "horizon": 64,
+  "epochs": 2,
+  "minibatch": 128,
+  "learning_rate": 0.0001,
+  "numeric_repeats": 16,
+  "arm_repeats": 2,
+  "scope": "Book A/B initialization and calibration; fresh single-seed C training, paired novel starts; v4 continuous physical hold separately reported."
+}
