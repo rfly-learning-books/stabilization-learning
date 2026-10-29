@@ -42,6 +42,10 @@
         "train_scene_count": 1,
         "replay_capacity": 20000,
         "replay_cached_episodes": 16,
+        "storage": {
+          "checkpoints": "lossless_objects_v1",
+          "replay": "active_and_restart"
+        },
         "probe_batch_size": 4,
         "minimum_free_gib": 20,
         "validation_plants": [

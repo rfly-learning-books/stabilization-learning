@@ -69,7 +69,8 @@ class HistoricalRGBBackend(V1Backend):
                 raise RuntimeError("RGB job does not belong to the frozen group protocol")
             if _sha(self.output / frozen["checkpoint"]) != frozen["sha256"]:
                 raise RuntimeError("Frozen RGB checkpoint changed")
-            saved = torch.load(self.output / frozen["checkpoint"], map_location="cpu", weights_only=False)
+            from stabilization_learning.storage import load_checkpoint
+            saved = load_checkpoint(self.output / frozen["checkpoint"], map_location="cpu")
             for name in ("ae", "metric"):
                 for key, value in getattr(self.learner, name).state_dict().items():
                     if not torch.equal(value.detach().cpu(), saved["learner"][name][key].cpu()):

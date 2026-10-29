@@ -68,6 +68,41 @@ def test_model_snapshot_is_independent_and_contains_no_optimizer():
     assert learner.counts["ae"] == 7
 
 
+def test_book_save_uses_compact_store_and_pins_full_snapshot_replay(tmp_path):
+    from extensions.rgb_book_reproduction_v1.backend import BookRGBBackend
+    from stabilization_learning.storage import load_checkpoint
+    from stabilization_learning.storage.replay import ReplayRetention
+    backend = BookRGBBackend.__new__(BookRGBBackend)
+    backend.output, backend.deadline, backend.device = tmp_path, None, "cpu"
+    backend.config = dict(epochs=2, minimum_free_gib=0,
+        storage=dict(checkpoints="lossless_objects_v1", replay="active_and_restart"))
+    backend.learner = learner_fixture()
+    backend.learner.payload = lambda: inference_state(backend.learner) | {
+        name: getattr(backend.learner, name).state_dict() for name in OPTIMIZERS}
+    backend.initial_hash, backend.initial_metric_hash, backend.collection_id = "ae", "m", 1
+    backend.rng = np.random.default_rng(3)
+    replay_root = tmp_path / "replay"
+    replay_root.mkdir()
+    retention = ReplayRetention(replay_root, "active_and_restart")
+    (replay_root / "bootstrap.npz").write_bytes(b"bootstrap")
+    retention.register("bootstrap.npz")
+    backend.replay = SimpleNamespace(rows=[{"file": "bootstrap.npz"}],
+        rng=np.random.default_rng(4), retention=retention)
+    ready = tmp_path / "checkpoints/ready.pt"
+    result = backend.save(ready)
+    assert result["storage"]["format"] == "lossless_objects_v1" and result["optimizer_complete"]
+    assert retention.pinned == {"bootstrap.npz"}
+    snapshot = load_checkpoint(ready)
+    assert set(OPTIMIZERS) <= snapshot["learner"].keys()
+    epoch = tmp_path / "checkpoints/epoch_0001.pt"
+    result = backend.save(epoch)
+    assert not result["optimizer_complete"] and load_checkpoint(epoch)["replay_rows"] is None
+    with torch.no_grad():
+        backend.learner.metric.weight.add_(1)
+    backend.load(epoch)
+    assert_nested_equal(inference_state(backend.learner), load_checkpoint(epoch)["learner"])
+
+
 def test_restore_models_restores_buffers_and_metadata_without_optimizer_or_rng():
     learner = learner_fixture()
     state = inference_state(learner)
@@ -272,7 +307,7 @@ def write_json(path, data):
     path.write_text(json.dumps(data, sort_keys=True), encoding="utf-8")
 
 
-def frozen_fixture(tmp_path):
+def frozen_fixture(tmp_path, compact=False):
     learner = learner_fixture()
     folder = tmp_path / "jobs" / "rgb-book"
     (folder / "checkpoints").mkdir(parents=True)
@@ -280,7 +315,12 @@ def frozen_fixture(tmp_path):
     write_json(protocol, {"experiment": "book-reproduction-test"})
     write_json(folder / "protocol.json", {"suite_protocol_sha256": file_hash(protocol)})
     checkpoint = folder / "checkpoints" / "selected.pt"
-    torch.save({"learner": inference_state(learner)}, checkpoint)
+    if compact:
+        from stabilization_learning.storage import save_checkpoint
+        save_checkpoint(checkpoint, {"learner": inference_state(learner)},
+                        store_root=folder / ".checkpoint_objects")
+    else:
+        torch.save({"learner": inference_state(learner)}, checkpoint)
     write_json(folder / "FROZEN.json", {"checkpoint": "checkpoints/selected.pt",
                "sha256": file_hash(checkpoint), "protocol_sha256": file_hash(folder / "protocol.json")})
     write_json(tmp_path / "GLOBAL_FROZEN.json", {"protocol_sha256": file_hash(protocol),
@@ -288,8 +328,9 @@ def frozen_fixture(tmp_path):
     return SimpleNamespace(output=folder, learner=learner)
 
 
-def test_frozen_evaluation_accepts_only_the_saved_selection(tmp_path):
-    backend = frozen_fixture(tmp_path)
+@pytest.mark.parametrize("compact", [False, True])
+def test_frozen_evaluation_accepts_only_the_saved_selection(tmp_path, compact):
+    backend = frozen_fixture(tmp_path, compact=compact)
     verify_frozen(backend)
     with torch.no_grad():
         backend.learner.metric.weight.add_(.1)

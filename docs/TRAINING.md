@@ -158,4 +158,6 @@ python scripts/run_unified_training_v4.py reproduce --config configs/public/unif
 
 ## 输出与检查
 
+书稿 RGB 新模板默认采用检查点无损去重，并按活动索引和完整检查点引用保留回放；冻结特征 Critic/M 新模板默认对检查点去重。运行命令保持原样。旧本地配置可在新实验的 `jobs[0].config.storage` 中声明保存模式，详见 [runs 存储说明](RUN_STORAGE.md)。
+
 输出包含检查点、历史、协议、阶段状态、冻结标记和评价结果，具体文件名由入口定义。`python -m pytest` 默认执行免外部训练资产的测试。历史研究测试可按文件名显式运行，并提供其资源。`python scripts/check_publication.py` 检查 Git 暂存或跟踪文件中的数据、权重和凭据模式。

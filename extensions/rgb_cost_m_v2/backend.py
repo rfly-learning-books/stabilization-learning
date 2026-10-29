@@ -11,6 +11,8 @@ from stabilization_learning.rgb_stable.cost_q import FrozenFeatureReplay,visual_
 from extensions.rgb_stable_m_v1.backend import StableMetricRGBBackend,make_replay
 from extensions.unified_training_v1.backends.rgb import PROJECT,_write,_module_hash,_sha
 from .learner import build_learner
+from stabilization_learning.storage import save_checkpoint
+from stabilization_learning.storage.checkpoints import object_store
 
 
 class CostMetricRGBBackend(StableMetricRGBBackend):
@@ -31,7 +33,7 @@ class CostMetricRGBBackend(StableMetricRGBBackend):
             initial_ae_sha256=self.initial_hash,initial_metric_sha256=self.initial_metric_hash)
         payload=dict(schema='rgb_frozen_candidate_delta_v2',reference=dict(path='../checkpoints/ready.pt',sha256=_sha(reference)),
             state=state,learner_changes={k:v for k,v in full.items() if k not in fixed})
-        tmp=path.with_suffix('.pt.tmp'); torch.save(payload,tmp); tmp.rename(path)
+        save_checkpoint(path,payload,store_root=object_store(self.config,self.output))
         _write(path.with_suffix('.COUNTS.json'),dict(actual_calls_including_rejections=dict(self.actual_counts),
             retained_model_counts=self.learner.counts,validation_epoch=self.epoch_number,
             storage='lossless delta; expand with extensions.rgb_cost_m_v2.checkpoint.load_checkpoint'))

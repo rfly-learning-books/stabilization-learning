@@ -18,6 +18,7 @@
         "post_success_steps": 50,
         "maximum_episodes_per_room": 128,
         "replay_capacity": 30000,
+        "storage": {"checkpoints": "lossless_objects_v1"},
         "regular_collection_quotas": [
           {
             "classroom_train_00": 8,

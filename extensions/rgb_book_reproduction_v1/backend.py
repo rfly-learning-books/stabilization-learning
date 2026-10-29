@@ -9,19 +9,14 @@ import shutil
 import numpy as np
 import torch
 from stabilization_learning.rgb_book import make_learner, inference_state, restore_models
+from stabilization_learning.storage import load_checkpoint, save_checkpoint
+from stabilization_learning.storage.checkpoints import object_store
+from stabilization_learning.storage.replay import bounded_replay_class
 from extensions.unified_training_v1.backends.rgb import Backend, PROJECT, _write, _sha, _module_hash
 
 
-def save_tensor(path, payload):
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if path.exists():
-        raise FileExistsError(path)
-    temp = path.with_name(path.name + ".tmp")
-    if temp.exists():
-        raise FileExistsError(temp)
-    torch.save(payload, temp)
-    temp.rename(path)
+def save_tensor(path, payload, *, store_root=None):
+    return save_checkpoint(path, payload, store_root=store_root)
 
 
 class BookRGBBackend(Backend):
@@ -72,15 +67,8 @@ class BookRGBBackend(Backend):
         self.depth = self.adapter.core.FastDepth(self.cfg, self.device)
         parent = self.adapter.core.Replay
         cache_limit = self.config.get("replay_cached_episodes", 16)
-        class CachedReplay(parent):
-            def load(replay, row):
-                if row["file"] not in replay.cache:
-                    with np.load(replay.root / row["file"], allow_pickle=False) as archive:
-                        replay.cache[row["file"]] = {key: archive[key] for key in archive.files}
-                    while len(replay.cache) > cache_limit:
-                        replay.cache.popitem(last=False)
-                replay.cache.move_to_end(row["file"])
-                return replay.cache[row["file"]]
+        retention_mode = self.config.get("storage", {}).get("replay", "all")
+        CachedReplay = bounded_replay_class(parent, retention_mode, cache_limit)
         self.replay = CachedReplay(self.output, self.cfg, self.seed)
         if self.replay.rows:
             raise FileExistsError("Fresh run required")
@@ -154,12 +142,15 @@ class BookRGBBackend(Backend):
             collection_rng=deepcopy(self.rng.bit_generator.state), collection_id=self.collection_id,
             torch_rng=torch.get_rng_state(), cuda_rng=torch.cuda.get_rng_state_all(),
             numpy_rng=np.random.get_state(), python_rng=random.getstate())
-        save_tensor(path, payload)
-        return dict(path=str(path), sha256=_sha(path), optimizer_complete=full, counts=self.learner.counts.copy())
+        storage = save_tensor(path, payload, store_root=object_store(self.config, self.output))
+        if full and hasattr(self.replay, "retention"):
+            self.replay.retention.pin(payload["replay_rows"], path.relative_to(self.output))
+        return dict(path=str(path), sha256=_sha(path), optimizer_complete=full,
+                    counts=self.learner.counts.copy(), storage=storage)
 
     def load(self, path):
         self.guard()
-        saved = torch.load(path, map_location=self.device, weights_only=False)
+        saved = load_checkpoint(path, map_location=self.device)
         if saved.get("schema") != "rgb_book_checkpoint_v1" or saved["config"] != self.config:
             raise ValueError("RGB book checkpoint mismatch")
         restore_models(self.learner, saved["learner"])

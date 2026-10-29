@@ -26,6 +26,9 @@ for _path in (PROJECT, PROJECT / "stabilization-gym", PROJECT / "stabilization-l
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
+from stabilization_learning.storage import load_checkpoint, save_checkpoint
+from stabilization_learning.storage.checkpoints import object_store
+
 
 def _sha(path):
     h = hashlib.sha256()
@@ -356,11 +359,11 @@ class Backend:
             numpy_rng=np.random.get_state(), python_rng=random.getstate(), config=self.config,
             fixed_probe=self.fixed_probe,
             initial_ae_sha256=self.initial_hash, initial_metric_sha256=self.initial_metric_hash)
-        tmp = path.with_suffix(path.suffix+".tmp"); torch.save(payload, tmp); tmp.rename(path)
-        return dict(path=str(path), sha256=_sha(path), counts=self.learner.counts.copy())
+        storage = save_checkpoint(path, payload, store_root=object_store(self.config, self.output))
+        return dict(path=str(path), sha256=_sha(path), counts=self.learner.counts.copy(), storage=storage)
 
     def load(self, path):
-        self.guard(); payload = torch.load(path, map_location=self.device, weights_only=False)
+        self.guard(); payload = load_checkpoint(path, map_location=self.device)
         if payload["schema"] != "unified_rgb_legacy_v1" or payload["config"] != self.config:
             raise ValueError("RGB checkpoint contract mismatch")
         self.learner.restore(payload["learner"]); self.learner.inputs.clear()
@@ -402,7 +405,7 @@ class Backend:
                 raise RuntimeError("RGB job does not belong to the frozen group protocol")
             if _sha(self.output / frozen["checkpoint"]) != frozen["sha256"]:
                 raise RuntimeError("Frozen RGB checkpoint changed")
-            saved = torch.load(self.output / frozen["checkpoint"], map_location="cpu", weights_only=False)
+            saved = load_checkpoint(self.output / frozen["checkpoint"], map_location="cpu")
             for name in ("ae", "metric"):
                 for key, value in getattr(self.learner, name).state_dict().items():
                     if not torch.equal(value.detach().cpu(), saved["learner"][name][key].cpu()):

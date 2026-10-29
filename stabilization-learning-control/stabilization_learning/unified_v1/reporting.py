@@ -76,7 +76,9 @@ def _safe_path(root, value):
 
 
 def _integrity(root, protocol, final):
+    from stabilization_learning.storage import verify_checkpoint
     problems, inventory = [], {}
+    verified_objects = set()
     phash = sha256(root/"protocol.json")
     for path, expected in protocol.get("sources", {}).items():
         actual = sha256(path) if Path(path).is_file() else None
@@ -101,6 +103,11 @@ def _integrity(root, protocol, final):
             target = _safe_path(folder, marker["checkpoint"])
             if not target.is_file() or sha256(target) != marker["sha256"]:
                 problems.append("committed checkpoint hash mismatch: " + str(target))
+            elif target.is_file():
+                try:
+                    verify_checkpoint(target, verified=verified_objects)
+                except (ValueError, OSError) as error:
+                    problems.append("checkpoint objects invalid: " + str(error))
         local = folder/"FROZEN.json"
         if local.exists():
             marker = read(local)

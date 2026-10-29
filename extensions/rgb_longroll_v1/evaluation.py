@@ -6,6 +6,7 @@ import math
 import time
 import numpy as np
 import torch
+from stabilization_learning.storage import load_checkpoint
 
 from extensions.unified_training_v1.backends.rgb import PROJECT, _sha, _module_hash, _write
 from extensions.rgb_diagnostic_v5.legacy_transfer import LegacyPolicy
@@ -17,7 +18,7 @@ def load_previous_short(self):
     source = Path(self.config["previous_short_checkpoint"])
     if _sha(source) != self.config["previous_short_checkpoint_sha256"]:
         raise RuntimeError("Previous short selected checkpoint changed")
-    saved = torch.load(source, map_location="cpu", weights_only=False)
+    saved = load_checkpoint(source, map_location="cpu")
     ae, metric = deepcopy(self.learner.ae), deepcopy(self.learner.metric)
     ae.load_state_dict(saved["learner"]["ae"])
     metric.load_state_dict(saved["learner"]["metric"])
@@ -171,7 +172,7 @@ def evaluate_longroll(self, split="test", variants=("selected", "initial", "iden
             raise RuntimeError("RGB job does not belong to the frozen group protocol")
         if _sha(self.output / frozen["checkpoint"]) != frozen["sha256"]:
             raise RuntimeError("Frozen RGB checkpoint changed")
-        saved = torch.load(self.output / frozen["checkpoint"], map_location="cpu", weights_only=False)
+        saved = load_checkpoint(self.output / frozen["checkpoint"], map_location="cpu")
         for name in ("ae", "metric"):
             for key, value in getattr(self.learner, name).state_dict().items():
                 if not torch.equal(value.detach().cpu(), saved["learner"][name][key].cpu()):

@@ -14,6 +14,7 @@ import numpy as np
 from stabilization_learning.unified_v1 import runner as files
 from extensions.unified_training_v3.numerical import require_finite
 from .runtime import content_hash, VOLATILE
+from stabilization_learning.storage import load_checkpoint
 
 
 def process_snapshot(roots):
@@ -243,7 +244,7 @@ def _inventory(root, *, metadata_only=False):
             path = _inside(folder, folder/marker["checkpoint"])
             if path != marker_path.with_name(marker_path.name.replace(".COMMITTED.json", ".pt")) or owner.fingerprint(path) != marker["sha256"]:
                 raise RuntimeError("Checkpoint integrity failed")
-            payload = torch.load(path, map_location="cpu", weights_only=False)
+            payload = load_checkpoint(path, map_location="cpu")
             owner.fingerprint(path)
             if not isinstance(payload, dict):
                 raise RuntimeError("Unsupported checkpoint payload")

@@ -15,12 +15,13 @@ import torch
 
 from extensions.unified_training_v1.backends.rgb import _write, _sha, _module_hash
 from stabilization_learning.unified_v1.runner import check_frozen
+from stabilization_learning.storage import load_checkpoint
 
 
 def verify_frozen(backend):
     check_frozen(backend.output.parent.parent, [backend.output.name])
     marker = json.loads((backend.output / "FROZEN.json").read_text(encoding="utf-8"))
-    saved = torch.load(backend.output / marker["checkpoint"], map_location="cpu", weights_only=False)
+    saved = load_checkpoint(backend.output / marker["checkpoint"], map_location="cpu")
     for name in ("ae", "metric"):
         for key, tensor in getattr(backend.learner, name).state_dict().items():
             if not torch.equal(tensor.detach().cpu(), saved["learner"][name][key].cpu()):

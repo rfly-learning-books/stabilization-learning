@@ -82,6 +82,8 @@ python scripts/run_observer_training_v5.py train --config configs/public/observe
 
 详细参数、运行时锁、GPU 配置及输出协议见 [训练指南](docs/TRAINING.md)。按书稿章节选择环境、查找从头训练入口及已有实验结果，见 [训练任务与书稿对应关系](docs/BOOK_TASKS.md)。
 
+RGB 新模板支持检查点无损去重与有界回放，配置和空间测算见 [runs 存储说明](docs/RUN_STORAGE.md)。
+
 ## 库与职责
 
 | 层 | 代码 | 职责 |

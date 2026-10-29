@@ -5,7 +5,7 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-BLOCKED_DIRS = {"runs", "artifacts", "handoff", "runtime_logs", "replay", "checkpoints", "external_assets", "__pycache__", "build", "dist"}
+BLOCKED_DIRS = {"runs", "artifacts", "handoff", "runtime_logs", "replay", "checkpoints", ".checkpoint_objects", "external_assets", "__pycache__", "build", "dist"}
 BLOCKED_SUFFIXES = {".pt", ".pth", ".ckpt", ".safetensors", ".onnx", ".npz", ".npy", ".pkl", ".pickle", ".h5", ".hdf5", ".bin", ".joblib", ".parquet", ".csv", ".jsonl", ".log", ".gz", ".zip", ".mp4", ".avi", ".webm", ".gif", ".pem", ".key"}
 SECRET_PATTERNS = [r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
     r"\bgh[pousr]_[A-Za-z0-9]{30,}\b", r"\bgithub_pat_[A-Za-z0-9_]{40,}\b",

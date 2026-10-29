@@ -18,6 +18,7 @@ handoff/
 runtime_logs/
 replay/
 checkpoints/
+.checkpoint_objects/
 logs/
 wandb/
 tensorboard/

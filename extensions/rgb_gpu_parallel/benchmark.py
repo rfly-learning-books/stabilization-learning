@@ -134,7 +134,8 @@ def restore_workload(root, cfg):
         raise RuntimeError("Frozen compute workload checkpoint changed")
     config = RGBRunConfig.from_dict({k: v for k, v in protocol["config"].items() if k in RGBRunConfig.__dataclass_fields__})
     learner = _new_learner(cfg, config)
-    payload = torch.load(run / frozen["checkpoint"], map_location="cpu", weights_only=False)
+    from stabilization_learning.storage import load_checkpoint
+    payload = load_checkpoint(run / frozen["checkpoint"], map_location="cpu")
     _restore_for_evaluation(learner, payload)
     return learner, payload, dict(path=str(run / frozen["checkpoint"]), sha256=frozen["sha256"],
                                  use="frozen three-update engineering model, compute workload only")
